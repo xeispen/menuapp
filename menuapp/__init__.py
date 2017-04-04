@@ -18,7 +18,7 @@ CLIENT_ID = json.loads(
     open('/var/www/menuapp/menuapp/client_secrets.json', 'r').read())['web']['client_id']
 
 # create session and connect to DB
-engine = create_engine('postgresql://postgres:psql123@localhost/catalog')
+engine = create_engine('postgresql://grader:psql123@localhost/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -58,7 +58,7 @@ def gconnect():
         return response
     code = request.data
     try:
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/var/www/menuapp/menuapp/client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         # exchanges auth code for credentials object
         credentials = oauth_flow.step2_exchange(code)
